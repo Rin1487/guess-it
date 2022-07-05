@@ -22,8 +22,8 @@ class GameViewModel: ViewModel() {
     private val timer: CountDownTimer
 
     // The current time
-    private val _currentTime = MutableLiveData<Long>()
-    val currentTime: LiveData<Long>
+    private val _currentTime = MutableLiveData<String>()
+    val currentTime: LiveData<String>
         get() = _currentTime
 
     // The current word
@@ -48,11 +48,11 @@ class GameViewModel: ViewModel() {
         _score.value = 0
         resetList()
         nextWord()
-        _currentTime.value = COUNTDOWN_TIME
+        _currentTime.value = ""
 
         timer = object : CountDownTimer(COUNTDOWN_TIME, ONE_SECOND){
             override fun onTick(millisUntilFinished: Long) {
-                _currentTime.value= millisUntilFinished / ONE_SECOND
+                _currentTime.value= DateUtils.formatElapsedTime(millisUntilFinished / ONE_SECOND)
             }
 
             override fun onFinish() {
